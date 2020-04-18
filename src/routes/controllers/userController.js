@@ -8,7 +8,10 @@ const validateInput = require("../../utils/validator");
 module.exports = class userController {
   static async getAllUsers(req, res) {
     try {
-      const users = await User.find({}, { tokens: 0, tokenLife: 0 });
+      const users = await User.find(
+        {},
+        { tokens: 0, tokenLife: 0, password: 0 }
+      );
       res.json({ success: true, users });
     } catch (err) {
       res.json({ success: false, error: err.message });
