@@ -1,40 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./linter/styles/codepen-embed.css">
-    <title>Document</title>
-  </head>
-  <body>
-    <div class="container">
-      <header class="header">
-        <div class="logo"><h1>30 DAYS OF coding Backend API</h1></div>
-      </header>
-      <section class="dashboard">
-        <div class="side">
-          <nav>
-            <ul>
-              <li>Signup requests</li>
-              <li>Login reuest</li>
-              <li>Update requests</li>
-              <li>Delete requests</li>
-              <li>protected Route requests</li>
-              <li>getUsers requests</li>
-            </ul>
-          </nav>
-        </div>
 
-        <div class="view">
-          <div class="infoContainer">
-            <div class="infobox">
-              <div class="request">
-              <h2>Get All USers</h2>
-              </div>
-              <div class="response">
-                <div class="responseview">
-  <pre>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./style.css" />
+  <link rel="stylesheet" href="./linter/styles/codepen-embed.css" />
+  <link rel="icon" href="img/code3.jpg">
+  <title>ECX CORE API</title>
+
+</head>
+
+<body>
+  <div class="container">
+    <header class="header">
+      <img src="img/api1.png">
+      <div class="logo">
+        <h1>30 DAYS OF coding Backend API</h1>
+      </div>
+      <img src="img/code3.jpg">
+    </header>
+    <section class="dashboard">
+      <div class="side">
+        <nav>
+          <ul>
+            <li>Signup requests</li>
+            <li>Login reuest</li>
+            <li>Update requests</li>
+            <li>Delete requests</li>
+            <li>protected Route requests</li>
+            <li>getUsers requests</li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="view">
+        <div class="infoContainer">
+          <div class="infobox">
+            <div class="request">
+              <h2>GET All USERS</h2>
+              <p><span>/GET/ </span> /api/users</p>
+              <p>description</p>
+              <p>this endpoint fetches all available users from database</p>
+              <a href="#"> try it <i></i></a>
+            </div>
+            <div class="response">
+              <div class="responseview">
+                <pre>
       <code class="javascript">
         {
           "success": true,
@@ -56,17 +68,257 @@
       }                
       </code>
 </pre>
-                </div>
-                <a href="#"> try it <i></i></a>
               </div>
+
             </div>
           </div>
-        </section>
-      </section>
-    </div>
-    <script src="linter/highlight.pack.js"></script>
-    <script>
-      hljs.initHighlightingOnLoad();
-    </script>
-  </body>
+          <!-- ENDPOINT get all! -->
+          <div class="infobox">
+            <div class="request">
+              <h2>GET USER BY ID(params)</h2>
+              <p><span>/GET/ </span>/api/users/getuser/:id</p>
+              <p>description</p>
+              <p>this endpoint fetches a user withfrom database</p>
+              <a href="#"> try it <i></i></a>
+            </div>
+            <div class="response">
+              <pre>
+                    <code class="javascript">
+        {
+          "success": true,
+          "users": [
+              {
+                  "names": [],
+                  "occupation": "not stated",
+                  "lastLogin": "never",
+                  "_id": "5e9a8b28ca40653048e5e5a1",
+                  "name": "mulansu",
+                  "email": "lizzy@gmail.com",
+                  "password":"hashed password",
+                  "date": "18-4-2020",
+                  "time": "6:07:52 AM",
+                  "__v": 1
+              },
+              ...
+          ]
+      }                
+      </code>
+                </pre>
+            </div>
+          </div>
+          <!-- ENDPOINT ! getby id -->
+
+          <div class="infobox">
+            <div class="request">
+              <h2>USER SIGNUP(params)</h2>
+              <p><span>/POST/ </span>/api/users/signup</p>
+              <p>description</p>
+              <p>this endpoint register a new user</p>
+              <a href="#"> try it <i></i></a>
+            </div>
+            <div class="response">
+
+              <pre>
+          <code class="javascript">
+//REQUEST BODY 
+ {
+        "usernames": String,
+        "email":String,
+        "occupation": String,
+        "password":String,
+ },
+//RESPONSE BODY          
+{
+"success": true,
+"users": [
+    {
+        "names": [],
+        "occupation": "not stated",
+        "lastLogin": "never",
+        "_id": "5e9a8b28ca40653048e5e5a1",
+        "name": "mulansu",
+        "email": "lizzy@gmail.com",
+        "password":"hashed password",
+        "date": "18-4-2020",
+        "time": "6:07:52 AM",
+        "__v": 1
+    },
+    ...
+]
+}                
+</code>
+      </pre>
+            </div>
+          </div>
+          <!-- ENDPOINT ! user sign up -->
+
+          <div class="infobox">
+            <div class="request">
+              <h2> USER Login (params)</h2>
+              <p><span>/POST/ </span>/api/users/login</p>
+              <p>description</p>
+              <p>this endpoint logs in a user and generates a session token</p>
+              <a href="#"> try it <i></i></a>
+            </div>
+            <div class="response">
+              <pre>
+               <code class="javascript">
+/* REQUEST BODY note login can either be email or username */
+{
+      "username":"mulansu",
+      "email":"lizzy@gmail.com",
+      "password":"67899"
+}
+/******* RESPONSE ********/
+{
+    "AUTH": "true",
+    "token": "a user generated token will be here"
+    "message": "you have been succesfully logged in"
+}
+
+               </code>
+          </pre>
+            </div>
+          </div>
+          <!-- ENDPOINT ! user login-->
+
+          <div class="infobox">
+            <div class="request">
+              <h2>UPDATE USER BY ID(params)</h2>
+              <p><span>/PUT/ </span>/api/users/update/:id</p>
+              <p>description</p>
+              <p>this endpoint updates the info of an existing user user</p>
+              <a href="#"> try it <i></i></a>
+            </div>
+            <div class="response">
+
+              <pre>
+          <code class="javascript">
+//REQUEST BODY 
+ {
+        "usernames": String,
+        "email":String,
+        "occupation": String,
+        "password":String,
+ },
+//RESPONSE BODY          
+{
+"success": true,
+"users": [
+    {
+        "names": [],
+        "occupation": "not stated",
+        "lastLogin": "never",
+        "_id": "5e9a8b28ca40653048e5e5a1",
+        "name": "mulansu",
+        "email": "lizzy@gmail.com",
+        "password":"hashed password",
+        "date": "18-4-2020",
+        "time": "6:07:52 AM",
+        "__v": 1
+    },
+    ...
+]
+}                
+</code>
+      </pre>
+            </div>
+          </div>
+          <!-- ENDPOINT ! update by id-->
+
+
+          <div class="infobox">
+            <div class="request">
+              <h2> DELETE USER BY ID (params)</h2>
+              <p><span>/DELETE/ </span>/api/users/delete/:id</p>
+              <p>description</p>
+              <p>this endpoint deletes or removes an exisiting user</p>
+              <a href="#"> try it <i></i></a>
+            </div>
+            <div class="response">
+              <pre>
+               <code class="javascript">
+
+/******* RESPONSE ********/
+{
+  "success": true,
+  "message": "user mulan was deleted successfully"
+}
+
+               </code>
+          </pre>
+            </div>
+          </div>
+          <!-- ENDPOINT ! delete by id -->
+
+          <div class="infobox">
+            <div class="request">
+              <h2>Protected USER PROFILE</h2>
+              <p><span>/GET/ </span>/api/users/me/profile</p>
+              <p>description</p>
+              <p>this allows a user with only a valid token to see all user details
+                token is the header Authentication, prefix with a bearer
+              </p>
+              <a href="#"> try it <i></i></a>
+            </div>
+            <div class="response">
+
+              <pre>
+          <code class="javascript">
+//REQUEST BODY 
+{
+  "email":"lizzy@gmail.com"
+ }
+//RESPONSE BODY          
+{
+  "_id": "5e9a6220cc9a193c6821d16f",
+  "username": "mulansu",
+  "email": "lizzy@gmail.com",
+  "names": [],
+  "occupation": "not stated",
+  "date": "18-4-2020",
+  "time": "3:12:48 AM",
+  "lastLogin": "18-4-2020-3:27:47 AM"
+}             
+</code>
+      </pre>
+            </div>
+          </div>
+          <!-- ENDPOINT ! protected user profile -->
+
+          <div class="infobox">
+            <div class="request">
+              <h2> get LOGS</h2>
+              <p><span>/GET/ </span>/api/logs</p>
+              <p>description</p>
+              <p>this endpoint get all request logs in the log file</p>
+              <a href="#"> try it <i></i></a>
+            </div>
+            <div class="response">
+              <pre>
+               <code class="plaintext">
+/******* RESPONSE ********/
+POST /api/users/signup 200 273.418 ms
+POST /api/users/login 200 379.585 ms
+GET /api/user/me/profile 401 36.424 ms
+PUT /user/update/5e9612c922d3951d7464e39b 404 2.750 ms
+DELETE /api/user/delete/5e9612c922d3951d7464e39b 200 45.064 ms
+GET /api/logs 200 8.958 ms
+               </code>
+          </pre>
+            </div>
+          </div>
+          <!-- ENDPOINT ! logs -->
+
+
+        </div>
+      </div>
+    </section>
+  </div>
+  <script src="linter/highlight.pack.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+</body>
+
 </html>

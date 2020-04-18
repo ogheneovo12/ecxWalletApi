@@ -6,9 +6,12 @@
 body {
   height: 100%;
 }
-.container {
-  display: flex;
-  flex-direction: column;
+header img {
+  width: 50px;
+  height: 50px;
+  border: 2px solid gold;
+  border-radius: 100%;
+  margin: 0 5px;
 }
 .dashboard {
   display: flex;
@@ -17,10 +20,15 @@ body {
 .view {
   padding: 10px;
   min-height: 100vh; /* Should be removed. Only for demonstration */
+  margin-left: 20%;
 }
 .side {
   background-color: #003746;
   width: 20%;
+  position: fixed;
+  top: 12vh;
+  left: 0;
+  bottom: 0;
 }
 .view {
   background-color: #142d39;
@@ -30,9 +38,11 @@ body {
 h2 {
   font-size: 1.5em;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  color: red;
 }
 .header {
   display: flex;
+  flex-direction: row;
   background-color: #1c1f26;
   min-height: 10vh;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
@@ -40,6 +50,10 @@ h2 {
   align-items: center;
   justify-content: center;
   padding: 10px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 255;
 }
 .header h1 {
   font-size: 20px;
@@ -53,13 +67,38 @@ h2 {
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   text-align: center;
 }
-.infobox .response {
-  height: 300px;
-  width: 40%;
+.infobox {
+  width: 100%;
+  min-height: 50vh;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+}
+.infobox .request {
+  line-height: 1.5em;
+}
+.infobox .request h2 {
+  color: rgba(245, 196, 124, 0.911);
 }
 code {
   font-size: 1vw;
-  width: 100%;
+
   overflow: hidden;
   border-radius: 20px;
+}
+.request code {
+  width: 40%;
+}
+a {
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+  background-color: rgb(255, 69, 0);
+  padding: 0.5em 3em;
+  border-radius: 10px;
+  font-weight: bold;
+  margin: 10px;
+  box-shadow: 1px 1px 5px inset rgba(0, 0, 0, 0.5);
+  filter: drop-shadow(1px 1px 5px rgba(0, 0, 0, 0.5));
 }
