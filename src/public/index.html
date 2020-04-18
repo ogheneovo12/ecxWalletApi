@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./linter/styles/codepen-embed.css">
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <div class="logo"><h1>30 DAYS OF coding Backend API</h1></div>
+      </header>
+      <section class="dashboard">
+        <div class="side">
+          <nav>
+            <ul>
+              <li>Signup requests</li>
+              <li>Login reuest</li>
+              <li>Update requests</li>
+              <li>Delete requests</li>
+              <li>protected Route requests</li>
+              <li>getUsers requests</li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="view">
+          <div class="infoContainer">
+            <div class="infobox">
+              <div class="request">
+              <h2>Get All USers</h2>
+              </div>
+              <div class="response">
+                <div class="responseview">
+  <pre>
+      <code class="javascript">
+        {
+          "success": true,
+          "users": [
+              {
+                  "names": [],
+                  "occupation": "not stated",
+                  "lastLogin": "never",
+                  "_id": "5e9a8b28ca40653048e5e5a1",
+                  "name": "mulansu",
+                  "email": "lizzy@gmail.com",
+                  "password":"hashed password",
+                  "date": "18-4-2020",
+                  "time": "6:07:52 AM",
+                  "__v": 1
+              },
+              ...
+          ]
+      }                
+      </code>
+</pre>
+                </div>
+                <a href="#"> try it <i></i></a>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+    </div>
+    <script src="linter/highlight.pack.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+  </body>
+</html>

@@ -87,3 +87,7 @@ POST /api/users/signup 200 1213.369 ms
 GET /api/logs 200 8.958 ms
 GET /api/logs 200 17.561 ms
 GET /api/logs 200 13.117 ms
+GET /api/users 200 18796.300 ms
+GET / 404 7.965 ms
+GET / 404 1.030 ms
+GET / 404 0.796 ms

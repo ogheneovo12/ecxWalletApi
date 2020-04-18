@@ -1,0 +1,65 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+body {
+  height: 100%;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+}
+.dashboard {
+  display: flex;
+}
+
+.view {
+  padding: 10px;
+  min-height: 100vh; /* Should be removed. Only for demonstration */
+}
+.side {
+  background-color: #003746;
+  width: 20%;
+}
+.view {
+  background-color: #142d39;
+  width: 80%;
+  color: white;
+}
+h2 {
+  font-size: 1.5em;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.header {
+  display: flex;
+  background-color: #1c1f26;
+  min-height: 10vh;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  color: goldenrod;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+.header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+.dashboard nav ul li {
+  color: honeydew;
+  list-style: none;
+  padding: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  text-align: center;
+}
+.infobox .response {
+  height: 300px;
+  width: 40%;
+}
+code {
+  font-size: 1vw;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 20px;
+}

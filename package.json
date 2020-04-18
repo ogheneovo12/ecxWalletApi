@@ -4,7 +4,7 @@
   "description": "30 days of code day 22 api task hosted on heroku",
   "main": "server.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "nodemon src/server.js"
   },
   "author": "",
   "license": "ISC",
