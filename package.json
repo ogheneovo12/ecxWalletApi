@@ -1,0 +1,11 @@
+{
+  "name": "ecxapi",
+  "version": "1.0.0",
+  "description": "30 days of code day 22 api task hosted on heroku",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
