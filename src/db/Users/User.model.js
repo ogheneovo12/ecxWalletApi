@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const mongoose = require("mongoose");
+const validateInput = require("../../utils/validator");
+const CONFIG = require("../../config/index.config");
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -61,12 +63,12 @@ const userSchema = new mongoose.Schema({
 });
 userSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
-    this.password = await bcrypt.hash(this.password, saltRounds);
+    this.password = await bcrypt.hash(this.password, CONFIG.saltRounds);
   }
   next();
 });
 userSchema.methods.generateAuthToken = async function () {
-  const token = jwt.sign({ _id: this.email }, JWT_KEY, {
+  const token = jwt.sign({ _id: this.email }, CONFIG.SECRET, {
     expiresIn: this.tokenLife,
   });
   this.tokens = this.tokens.concat({ token });

@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../../db/Users/User.model");
-const jwt = require("js");
 const path = require("path");
 const fs = require("fs");
 const validateInput = require("../../utils/validator");
@@ -12,11 +11,59 @@ module.exports = class userController {
       const users = await User.find({}, { tokens: 0, tokenLife: 0 });
       res.json({ success: true, users });
     } catch (err) {
-      res.json({ success: false, error: err });
+      res.json({ success: false, error: err.message });
     }
   }
-  static async getUser(req, res) {}
-  static async addUser(req, res) {}
+  static async getUser(req, res) {
+    User.findById({ _id: req.params.id })
+      .then((user) => {
+        const { _id, email, name, names, occupation, lastLogin } = user;
+        res.json({
+          success: true,
+          user: { _id, email, name, names, occupation, lastLogin },
+        });
+      })
+      .catch((err) => {
+        return res.status(401).json({
+          success: false,
+          error: `could not get user ${req.params.id} `,
+        });
+      });
+  }
+  static async addUser(req, res) {
+    try {
+      const existingUser = await User.findOne({
+        $or: [{ email: req.body.email }, { name: req.body.username }],
+      });
+      if (existingUser) {
+        throw { message: "user already exists" };
+      }
+      const day = new Date();
+      const { username, email, password, names, occupation } = req.body;
+      const user = new User({
+        name: username,
+        email,
+        password,
+        signedUp_at: day.toLocaleString(),
+        date: `${day.getDate()}-${day.getMonth() + 1}-${day.getFullYear()}`,
+        time: day.toLocaleTimeString(),
+        names,
+        occupation,
+      });
+      const itSaved = await user.save();
+      if (!itSaved) throw "could not create user";
+      const token = await user.generateAuthToken();
+      return res.json({
+        success: "true",
+        message: "Account has been succesfully registered",
+      });
+    } catch (err) {
+      return res.json({
+        success: "false",
+        error: err.message,
+      });
+    }
+  }
   static async loginUser(req, res) {
     const username = req.body.username || req.body.email;
     try {
@@ -26,7 +73,7 @@ module.exports = class userController {
       );
 
       if (!user) {
-        throw "invalid credentials";
+        throw { message: "invalid credentials" };
       }
       const day = new Date();
       user.lastLogin = `${day.getDate()}-${
@@ -41,7 +88,7 @@ module.exports = class userController {
     } catch (err) {
       return res.status(401).json({
         success: "false",
-        err,
+        error: err.message,
       });
     }
   }
@@ -50,7 +97,7 @@ module.exports = class userController {
       //save user with valid entries
       const user = await User.findOne({ _id: req.params.id });
       if (!user) {
-        throw "user does not exist";
+        throw { message: "user does not exist" };
       }
       if (req.body.username || req.body.email) {
         const existingUser = await User.find({
@@ -60,7 +107,7 @@ module.exports = class userController {
           ],
         });
         if (existingUser.length > 0) {
-          throw "user with credential already exist";
+          throw { message: "user with credential already exist" };
         }
       }
       user.name = req.body.username || user.name;
@@ -69,7 +116,7 @@ module.exports = class userController {
       user.names = req.body.names || user.names;
       const test = await user.save();
       if (!test) {
-        throw "could not update user";
+        throw { message: "could not update user" };
       }
       return res.json({
         success: true,
@@ -84,14 +131,14 @@ module.exports = class userController {
         message: "user updated succesfully",
       });
     } catch (err) {
-      res.json({ success: false, error: err });
+      res.json({ success: false, error: err.message });
     }
   }
   static async deleteUser(req, res) {
     try {
       const user = await User.findByIdAndDelete({ _id: req.params.id });
       if (!user) {
-        throw `user ${req.params.id} could not be deleted`;
+        throw { message: `user ${req.params.id} could not be deleted` };
       }
       return res.json({
         success: true,
@@ -100,19 +147,11 @@ module.exports = class userController {
     } catch (err) {
       return res.status(401).json({
         success: false,
-        error: err,
+        error: err.message,
       });
     }
   }
   static async protectedUser(req, res) {
     res.json(req.user);
-  }
-  static getLogs(req, res) {
-    fs.readFile(path.join(__dirname, "../../logger/logs.txt"), (err, log) => {
-      if (err) {
-        console.err(err);
-      }
-      res.send(log);
-    });
   }
 };

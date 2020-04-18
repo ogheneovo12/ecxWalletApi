@@ -1,4 +1,5 @@
 node_modules/
 .vscode/
-config/
-env/
+npm-debug.log
+.DS_Store
+/*.env
