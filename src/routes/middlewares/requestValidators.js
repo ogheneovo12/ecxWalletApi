@@ -1,9 +1,11 @@
 const validateInput = require("../../utils/validator");
 const CONFIG = require("../../config/index.config");
+const bcrypt = require('bcrypt')
 const signUpValidator = (req, res, next) => {
   const errors = validateInput([
     { type: "email", value: req.body.email },
     { type: "password", value: req.body.password },
+    { type: "pin", value: req.body.pin },
     { type: "username", value: req.body.username },
   ]);
   if (errors) {
@@ -27,9 +29,6 @@ const updateValidator = async (req, res, next) => {
   }
   if (req.body.email && !validateInput(null, "email")(req.body.email)) {
     return res.status(401).json({ success: false, error: "inavlid email" });
-  }
-  if (req.body.password) {
-    req.body.password = await bcrypt.hash(req.body.password, CONFIG.saltRounds);
   }
   next();
 };

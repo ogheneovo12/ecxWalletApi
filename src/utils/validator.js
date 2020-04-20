@@ -8,6 +8,18 @@ function validateInput(arr, expose) {
     }
     return true;
   };
+  const validatePin = (pin) => {
+    if (!/[0-9]/.test(pin)) {
+      error += "pin must be valid numbers, ";
+      return false;
+    }
+    if (pin.length < 4 || pin.length > 4) {
+      error += "pin must be 4 characters long, ";
+
+      return false;
+    }
+    return true;
+  };
   const validateEmail = (email) => {
     let mailFormat = /^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/;
     if (!mailFormat.test(email)) {
@@ -36,6 +48,9 @@ function validateInput(arr, expose) {
         case "username":
           validateUsername(value);
           break;
+        case "pin":
+          validatePin(value);
+          break;
       }
     });
   }
@@ -52,6 +67,9 @@ function validateInput(arr, expose) {
         break;
       case "username":
         return validateUsername;
+        break;
+      case "username":
+        return validatePin;
         break;
       default:
         console.error({ error: "please use email,password,username or all" });

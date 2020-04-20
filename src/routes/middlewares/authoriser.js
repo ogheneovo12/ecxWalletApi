@@ -17,31 +17,11 @@ const authoriser = async (req, res, next) => {
     const sender = jwt.verify(token, CONFIG.SECRET);
     const user = await User.findOne({ email: sender._id });
     //token must match the user, if not prevent access
-    if (!user || req.body.email != user.email) {
+    if (!user || req.body.LoginEmail != user.email) {
       throw { message: "Not authorized to access this resource" };
     }
-    const {
-      name,
-      email,
-      signedUp_at,
-      date,
-      time,
-      names,
-      occupation,
-      lastLogin,
-    } = user;
-    req.user = {
-      _id: user._id,
-      username: name,
-      email,
-      names,
-      occupation,
-      date,
-      time,
-      lastLogin,
-    };
+    req.user = user;
     req.token = token;
-    next();
   } catch (err) {
     if (err.message.startsWith("jwt")) {
       err.message = err.message.replace("jwt", "token");

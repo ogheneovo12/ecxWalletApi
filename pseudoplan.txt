@@ -1,0 +1,26 @@
+//phonenumber
+    //reciepient phone number
+    //he must  provide a token to prove that he is logged in //authoriser
+    //we need to check if the person he wants to transfer to has been registered//done
+    //if not throw error unsuccesfull transfer of fund, recipient is not registered on the platform //done
+    //if the person exist make transfer and credit the person /done
+    //
+    //we need the amount he wants to transfer /done
+    //check if the amount is within the range of his available balance /done
+    //if it is not throw error insufficient fund /done
+    //credit the giver and debit the reciever /done
+    //store transaction in log /done
+    //if transaction is succesfull store it in both log /done
+    //if it is not store only in 
+    /* 
+       logs[
+         {
+           date, type, amount, status, info, 
+           //type will be credit or debit, status will be successfull or unsuccesfull, info will be reason
+         }
+       ]
+     */
+    //return succesfull transaction /done
+
+
+    getting tr

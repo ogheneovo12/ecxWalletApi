@@ -10,7 +10,13 @@ module.exports = class userController {
     try {
       const users = await User.find(
         {},
-        { tokens: 0, tokenLife: 0, password: 0 }
+        {
+          tokens: 0,
+          tokenLife: 0,
+          password: 0,
+          transactionPin: 0,
+          transactionLogs: 0,
+        }
       );
       res.json({ success: true, users });
     } catch (err) {
@@ -18,12 +24,15 @@ module.exports = class userController {
     }
   }
   static async getUser(req, res) {
-    User.findById({ _id: req.params.id })
+    User.findById(
+      { _id: req.params.id },
+      { transactionPin: 0, transactionLogs: 0 }
+    )
       .then((user) => {
-        const { _id, email, name, names, occupation, lastLogin } = user;
+        const { _id, email, name, amount, lastLogin } = user;
         res.json({
           success: true,
-          user: { _id, email, name, names, occupation, lastLogin },
+          user: { _id, email, name, amount, lastLogin },
         });
       })
       .catch((err) => {
@@ -38,20 +47,26 @@ module.exports = class userController {
       const existingUser = await User.findOne({
         $or: [{ email: req.body.email }, { name: req.body.username }],
       });
+      const existingPhone = await User.findOne({
+        phonenumber: req.body.phonenumber,
+      });
+      if (existingPhone) {
+        throw { message: "phone no already taken" };
+      }
       if (existingUser) {
-        throw { message: "user already exists" };
+        throw { message: "user already exists " };
       }
       const day = new Date();
-      const { username, email, password, names, occupation } = req.body;
+      const { username, email, password, phonenumber, pin } = req.body;
       const user = new User({
         name: username,
         email,
         password,
         signedUp_at: day.toLocaleString(),
-        date: `${day.getDate()}-${day.getMonth() + 1}-${day.getFullYear()}`,
-        time: day.toLocaleTimeString(),
-        names,
-        occupation,
+        // date: `${day.getDate()}-${day.getMonth() + 1}-${day.getFullYear()}`,
+        // time: day.toLocaleTimeString(),
+        transactionPin: pin,
+        phonenumber,
       });
       const itSaved = await user.save();
       if (!itSaved) throw "could not create user";
@@ -82,7 +97,7 @@ module.exports = class userController {
       user.lastLogin = `${day.getDate()}-${
         day.getMonth() + 1
       }-${day.getFullYear()}-${day.toLocaleTimeString()}`;
-      const token = await user.generateAuthToken(); //lol generate token automatically saves the user
+      const token = await user.generateAuthToken();
       return res.json({
         AUTH: "true",
         token,
@@ -97,10 +112,16 @@ module.exports = class userController {
   }
   static async updateUser(req, res) {
     try {
-      //save user with valid entries
       const user = await User.findOne({ _id: req.params.id });
       if (!user) {
         throw { message: "user does not exist" };
+      }
+     //allow only user that request for update to update only their info
+      if(req.user.email != user.email){
+        //also allow admins to update user details
+          if(!req.user.isAdmin){
+            throw {message:"not allowed admin"}
+          }
       }
       if (req.body.username || req.body.email) {
         const existingUser = await User.find({
@@ -117,6 +138,15 @@ module.exports = class userController {
       user.email = req.body.email || user.email;
       user.password = req.body.password || user.password;
       user.names = req.body.names || user.names;
+      user.phonenumber =req.body.phonenumber || user.phonenumber;
+      user.transactionPin = req.body.pin ||user.transactionPin;
+      //allow only admins to update transaction logs and tokens
+      user.tokens = req.user.isAdmin
+        ? req.body.tokens || user.tokens
+        : user.tokens;
+      user.transactionLogs = req.user.isAdmin
+        ? req.body.transactionLogs || user.transactionLogs
+        : user.transactionLogs;
       const test = await user.save();
       if (!test) {
         throw { message: "could not update user" };
@@ -143,6 +173,12 @@ module.exports = class userController {
       if (!user) {
         throw { message: `user ${req.params.id} could not be deleted` };
       }
+      if(req.user.email != user.email){
+        //also allow admins to update user details
+          if(!req.user.isAdmin){
+            throw {message:"not allowed admin"}
+          }
+      }
       return res.json({
         success: true,
         message: `user ${user.name} was deleted successfully`,
@@ -155,6 +191,32 @@ module.exports = class userController {
     }
   }
   static async protectedUser(req, res) {
-    res.json(req.user);
+    res.json({success:true, user:req.user});
+  }
+  static async transferFund(req, res) {
+    try {
+      const recepient = await User.checkIfregisteredMember(
+        req.body.phonenumber
+      );
+      if (!recepient) {
+        throw { error: "recipeint is not registred" };
+      }
+      if(!req.body.pin){
+        throw {message:"pin was not provided"}
+      }
+      await req.user.debit(
+        req.body.amount,
+        recepient.phonenumber,
+        req.body.pin
+      );
+      await recepient.credit(parseInt(req.body.amount), req.user.phonenumber);
+      res.json({ success: true, message: "transction was succesfull" });
+    } catch (error) {
+      res.json({success:false, error });
+    }
+  }
+  static async getTransactionHistory(req, res) {
+      const History = req.user.getTransactionHistory();
+      res.json({success:true, transactionHistory:History})
   }
 };

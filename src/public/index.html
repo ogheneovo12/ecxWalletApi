@@ -48,24 +48,25 @@
               <div class="responseview">
                 <pre>
       <code class="javascript">
-        {
-          "success": true,
-          "users": [
-              {
-                  "names": [],
-                  "occupation": "not stated",
-                  "lastLogin": "never",
-                  "_id": "5e9a8b28ca40653048e5e5a1",
-                  "name": "mulansu",
-                  "email": "lizzy@gmail.com",
-                  "password":"hashed password",
-                  "date": "18-4-2020",
-                  "time": "6:07:52 AM",
-                  "__v": 1
-              },
-              ...
-          ]
-      }                
+{
+  "success": true,
+  "users": [
+      {
+          "names": [],
+          "occupation": "not stated",
+          "lastLogin": "never",
+          "_id": "5e9a8b28ca40653048e5e5a1",
+          "name": "mulansu",
+          "email": "lizzy@gmail.com",
+          "phonenumber":"08034267"
+          "amount":50000
+          "date": "18-4-2020",
+          "time": "6:07:52 AM",
+          "__v": 1
+      },
+      ...
+  ]
+}                
       </code>
 </pre>
               </div>
@@ -83,25 +84,24 @@
             </div>
             <div class="response">
               <pre>
-                    <code class="javascript">
-        {
-          "success": true,
-          "users": [
-              {
-                  "names": [],
-                  "occupation": "not stated",
-                  "lastLogin": "never",
-                  "_id": "5e9a8b28ca40653048e5e5a1",
-                  "name": "mulansu",
-                  "email": "lizzy@gmail.com",
-                  "password":"hashed password",
-                  "date": "18-4-2020",
-                  "time": "6:07:52 AM",
-                  "__v": 1
-              },
-              ...
-          ]
-      }                
+            <code class="javascript">
+{
+  "success": true,
+  "users": [
+      {
+          "lastLogin": "never",
+          "_id": "5e9a8b28ca40653048e5e5a1",
+          "name": "mulansu",
+          "email": "lizzy@gmail.com",
+          "phone":"0803456790"
+          "amount":50000
+          "date": "18-4-2020",
+          "time": "6:07:52 AM",
+          "__v": 1
+      },
+      ...
+  ]
+}                
       </code>
                 </pre>
             </div>
@@ -121,31 +121,19 @@
               <pre>
           <code class="javascript">
 //REQUEST BODY 
- {
-        "usernames": String,
-        "email":String,
-        "occupation": String,
-        "password":String,
- },
+{
+  "username":"tega",
+  "email":"tegan@gmail.com",
+  "password":"12345",
+  "phonenumber":"0806789678",
+  "pin":"1234"
+ }
 //RESPONSE BODY          
 {
-"success": true,
-"users": [
-    {
-        "names": [],
-        "occupation": "not stated",
-        "lastLogin": "never",
-        "_id": "5e9a8b28ca40653048e5e5a1",
-        "name": "mulansu",
-        "email": "lizzy@gmail.com",
-        "password":"hashed password",
-        "date": "18-4-2020",
-        "time": "6:07:52 AM",
-        "__v": 1
-    },
-    ...
-]
-}                
+  "success": "true",
+  "message": "Account has been succesfully registered"
+}
+
 </code>
       </pre>
             </div>
@@ -164,11 +152,10 @@
               <pre>
                <code class="javascript">
 /* REQUEST BODY note login can either be email or username */
-{
-      "username":"mulansu",
-      "email":"lizzy@gmail.com",
-      "password":"67899"
-}
+{ 
+  "email":"tegan@gmail.com",
+  "password":"12345"
+ }
 /******* RESPONSE ********/
 {
     "AUTH": "true",
@@ -187,6 +174,7 @@
               <h2>UPDATE USER BY ID(params)</h2>
               <p><span>/PUT/ </span>/api/users/update/:id</p>
               <p>description</p>
+              <p> Authentication is required by login token</p>
               <p>this endpoint updates the info of an existing user user</p>
               <a href="#"> try it <i></i></a>
             </div>
@@ -195,24 +183,26 @@
               <pre>
           <code class="javascript">
 //REQUEST BODY 
- {
+ {       
+        "LoginEmail":"tegan@gmail.com"
+        //user info you want to update
         "usernames": String,
         "email":String,
         "occupation": String,
         "password":String,
+        "phonenumber":"phonenumber"
  },
 //RESPONSE BODY          
 {
 "success": true,
 "users": [
     {
-        "names": [],
-        "occupation": "not stated",
         "lastLogin": "never",
         "_id": "5e9a8b28ca40653048e5e5a1",
         "name": "mulansu",
         "email": "lizzy@gmail.com",
         "password":"hashed password",
+        "pin":"hashed pin"
         "date": "18-4-2020",
         "time": "6:07:52 AM",
         "__v": 1
@@ -231,6 +221,7 @@
             <div class="request">
               <h2> DELETE USER BY ID (params)</h2>
               <p><span>/DELETE/ </span>/api/users/delete/:id</p>
+              <p> Authentication is required by login token</p>
               <p>description</p>
               <p>this endpoint deletes or removes an exisiting user</p>
               <a href="#"> try it <i></i></a>
@@ -255,6 +246,7 @@
             <div class="request">
               <h2>Protected USER PROFILE</h2>
               <p><span>/GET/ </span>/api/users/me/profile</p>
+              <p> Authentication is required by login token</p>
               <p>description</p>
               <p>this allows a user with only a valid token to see all user details
                 token is the header Authentication, prefix with a bearer
@@ -267,24 +259,126 @@
           <code class="javascript">
 //REQUEST BODY 
 {
-  "email":"lizzy@gmail.com"
+  "LoginEmail":"lizzy@gmail.com"
  }
 //RESPONSE BODY          
 {
-  "_id": "5e9a6220cc9a193c6821d16f",
-  "username": "mulansu",
-  "email": "lizzy@gmail.com",
-  "names": [],
-  "occupation": "not stated",
-  "date": "18-4-2020",
-  "time": "3:12:48 AM",
-  "lastLogin": "18-4-2020-3:27:47 AM"
+  {
+    "success": true,
+    "user": {
+        "isAdmin": 0,
+        "lastLogin": "20-4-2020-2:24:05 AM",
+        "tokenLife": 600,
+        "amount": 9000,
+        "transactionLogs": [
+            {
+                "Date": "4/20/2020, 2:19:25 AM",
+                "type": "credit",
+                "amount": 4000,
+                "status": "succesfull",
+                "sender": "0806789345",
+                "info": "recieved"
+            }
+        ],
+        "_id": "5e9cf8406ce9ea1964e2218b",
+        "name": "tega",
+        "email": "tegan@gmail.com",
+        "password": "hashed",
+        "signedUp_at": "2020-04-20T01:17:52.000Z",
+        "transactionPin": "hashed",
+        "phonenumber": "0806789678",
+        "tokens": [
+            {token: "hashed token"}
+        ],
+        "__v": 3
+    }
+}
 }             
 </code>
       </pre>
             </div>
           </div>
           <!-- ENDPOINT ! protected user profile -->
+          <div class="infobox">
+            <div class="request">
+              <h2>transfer fund</h2>
+              <p><span>/post/ </span>/api/users/me/transfer</p>
+              <p>description</p>
+              <p>this endpoint carries out fund transfer</p>
+              <p>Authentication by login token required</p>
+              <a href="#"> try it <i></i></a>
+            </div>
+            <div class="response">
+              <pre>
+               <code class="javascript">
+  //REQUEST BODY
+
+{
+  "LoginEmail":"tegan@gmail.com",
+  "phonenumber":"0806789345"//person you want to send money to ,
+  "pin":"1234" //your transaction pin,
+  "amount":4000 //amount to send
+  }
+//RESPONSE BODY
+{
+  "success": true,
+  "message": "transction was succesfull"
+}
+ 
+               </code>
+          </pre>
+            </div>
+          </div>
+          <!-- ENDPOINT ! transaction -->
+
+         <div class="infobox">
+          <div class="request">
+            <h2> get Transaction History</h2>
+            <p><span>/post/ </span>/api/users/me/history</p>
+            <p>description</p>
+            <p>this endpoint shows transaction history of the autorised user or user to admin</p>
+            <p>Authentication by login token required</p>
+            <a href="#"> try it <i></i></a>
+          </div>
+          <div class="response">
+            <pre>
+             <code class="javascript">
+//REQUEST BODY
+  
+{
+"LoginEmail":"tegan@gmail.com",
+}
+//RESPONSE BODY
+{
+  "success": true,
+  "transactionHistory": [
+      {
+          "Date": "4/20/2020, 2:27:17 AM",
+          "type": "debit",
+          "amount": 4000,
+          "recipient": "0806789345",
+          "status": "succesfull",
+          "info": "sent"
+      },
+      {
+          "Date": "4/20/2020, 2:19:25 AM",
+          "type": "credit",
+          "amount": 4000,
+          "status": "succesfull",
+          "sender": "0806789345",
+          "info": "recieved"
+      }
+  ]
+}
+
+             </code>
+        </pre>
+          </div>
+        </div>
+        <!-- ENDPOINT ! history -->
+
+
+
 
           <div class="infobox">
             <div class="request">
