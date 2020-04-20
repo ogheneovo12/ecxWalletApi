@@ -16,6 +16,6 @@ userRoute.put(
 userRoute.delete("/delete/:id", authoriser, userControllers.deleteUser);
 userRoute.get("/me/profile", authoriser, userControllers.protectedUser);
 userRoute.post("/me/profile", authoriser, userControllers.protectedUser);
-userRoute.post("/me/transfer", authoriser, userControllers.transferFund);
-userRoute.get("/me/history", authoriser, userControllers.getTransactionHistory);
+userRoute.post("/transferFunds", authoriser, userControllers.transferFund);
+userRoute.get("/getUserTransactions", authoriser, userControllers.getTransactionHistory);
 module.exports = userRoute;
