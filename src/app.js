@@ -18,7 +18,7 @@ var checkForvalidIp = (req, callback)=>{
     };
   
     const currentIpAddress = req.connection.remoteAddress; 
-    corsOptions.origin = whitelist.includes(currentIpAddress)?true:false;
+    Options.origin = whitelist.includes(currentIpAddress)?true:false;
      callback(null,Options)
   }
   

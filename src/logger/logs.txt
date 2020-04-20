@@ -91,3 +91,4 @@ GET /img/api1.png 304 1.567 ms
 GET /img/code3.jpg 304 1.471 ms
 GET /linter/highlight.pack.js 304 0.863 ms
 GET /img/code3.jpg 200 0.735 ms
+GET /api/users 500 7.944 ms
